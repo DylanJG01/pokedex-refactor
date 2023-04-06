@@ -1,8 +1,8 @@
-"""definitely not the 5th migration
+"""migration name
 
-Revision ID: f685495e30e6
+Revision ID: 729eb553e529
 Revises: 
-Create Date: 2023-04-06 16:16:10.137492
+Create Date: 2023-04-06 14:30:01.371855
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f685495e30e6'
+revision = '729eb553e529'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,7 +25,7 @@ def upgrade():
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.Column('price', sa.Integer(), nullable=False),
     sa.Column('pokemon_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['pokemon_id'], ['pokemons.id'], ),
+    sa.ForeignKeyConstraint(['pokemon_id'], ['items.pokemon_id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('pokemons',

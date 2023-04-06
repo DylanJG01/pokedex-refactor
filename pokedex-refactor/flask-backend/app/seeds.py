@@ -66,9 +66,22 @@ def seed_pokemons():
 def seed():
     items = seed_items()
     pokemons = seed_pokemons()
-    
+
     for i in range (0, 3):
         db.session.add(pokemons[i])
         db.session.add(items[i])
-    
+
     db.session.commit()
+    print('FILES SUCCESFuLLY SEEDED')
+
+def undo_items():
+    db.session.execute('DELETE FROM items;')
+    db.session.commit()
+    print('ITEMS REMOVED FROM DB')
+
+def undo_pokemons():
+    db.session.execute('DELETE FROM pokemons;')
+    db.session.commit()
+    print('POKEMONS REMOVED FROM DB')
+
+

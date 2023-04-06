@@ -14,9 +14,9 @@ class Item(db.Model):
     image_url = db.Column(db.String(255), nullable=False) #0 is null! FIX IT!
     name = db.Column(db.String(255))
     price = db.Column(db.Integer, nullable=False)
-    pokemon_id = db.Column(db.Integer, db.ForeignKey("pokemons.id"))
+    pokemon_id = db.Column(db.Integer, db.ForeignKey("items.pokemon_id"))
 
-    pokemon = db.relationship("Pokemon", uselist = False, backref = "items")
+    pokemon = db.relationship("Pokemon", back_populates="items")
 
     @classmethod
     def to_dict(self):
@@ -42,6 +42,7 @@ class Pokemon(db.Model):
     name = db.Column(db.String(255),nullable=False, unique=True)
     type = db.Column(db.String, nullable=False) # must be from list of types
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'))
+    item = db.relationship('Item', back_populates='pokemon')
 
     @classmethod
     def to_dict(self):
@@ -77,7 +78,7 @@ class Pokemon(db.Model):
             raise ValueError("Attack must be between 0 and 100")
         return self
 
-    
+
     @validates("defense")
     def validate_defense(self, defense, pokemons):
         if defense < 0 or defense > 100:
@@ -102,10 +103,3 @@ class Pokemon(db.Model):
 # image1 = Image(name='image1.png')
 # blindmap1 = Blindmap()
 # blindmap1.image = image1
-
-
-
-
-
-
-

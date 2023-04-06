@@ -5,10 +5,10 @@ from .models import db
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 import os
-
+from .seeds import seed_commands
 
 app = Flask(__name__)
-
+app.cli.add_command(seed_commands)
 app.config.from_object(Configuration)
 
 #app.register_blueprint(.bp)
