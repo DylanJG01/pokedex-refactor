@@ -39,9 +39,9 @@ class Pokemon(db.Model):
     attack = db.Column(db.Integer, nullable=False) # min 0 max 100
     defense = db.Column(db.Integer, nullable=False) # 0 - 100
     image_url = db.Column(db.String, nullable=False) # custom
-    name = db.Column(db.String(3,255),nullable=False, unique=True)
+    name = db.Column(db.String(255),nullable=False, unique=True)
     type = db.Column(db.String, nullable=False) # must be from list of types
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'))
 
     @classmethod
     def to_dict(self):
