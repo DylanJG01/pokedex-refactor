@@ -14,9 +14,21 @@ class Item(db.Model):
     image_url = db.Column(db.String(255), nullable=False) #0 is null! FIX IT!
     name = db.Column(db.String(255))
     price = db.Column(db.Integer, nullable=False)
-    pokemon_id = db.Column(db.Integer, db.ForeignKey("pokemon.id"))
+    pokemon_id = db.Column(db.Integer, db.ForeignKey("pokemons.id"))
 
-    pokemon = db.relationship("Pokemon", useList = False, backref = "items")
+    pokemon = db.relationship("Pokemon", uselist = False, backref = "items")
+
+    @classmethod
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'happiness': self.happiness,
+            'imageUrl': self.image_url,
+            'name': self.name,
+            'price': self.price,
+            'pokemonId': self.pokemon_id,
+            'pokemon': self.pokemon
+        }
 
 
 class Pokemon(db.Model):
@@ -29,6 +41,21 @@ class Pokemon(db.Model):
     image_url = db.Column(db.String, nullable=False) # custom
     name = db.Column(db.String(3,255),nullable=False, unique=True)
     type = db.Column(db.String, nullable=False) # must be from list of types
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+
+    @classmethod
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'number': self.number,
+            'attack': self.attack,
+            'defense': self.defense,
+            'imageUrl': self.image_url,
+            'name': self.name,
+            'type': self.type,
+            'itemId': self.item_id
+        }
+
 
     @validates("number")
     def validate_number(self, number, pokemons):

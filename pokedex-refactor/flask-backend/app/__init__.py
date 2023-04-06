@@ -4,6 +4,8 @@ from .config import Configuration
 from .models import db
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
+import os
+
 
 app = Flask(__name__)
 
