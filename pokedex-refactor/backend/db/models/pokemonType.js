@@ -22,3 +22,9 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 module.exports.types = types;
+
+
+
+
+
+

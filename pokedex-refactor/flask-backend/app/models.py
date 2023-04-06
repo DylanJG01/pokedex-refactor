@@ -16,6 +16,8 @@ class Item(db.Model):
     price = db.Column(db.Integer, nullable=False)
     pokemon_id = db.Column(db.Integer, db.ForeignKey("pokemon.id"))
 
+    pokemon = db.relationship("Pokemon", useList = False, backref = "items")
+
 
 class Pokemon(db.Model):
     __tablename__ = "pokemons"
@@ -28,20 +30,32 @@ class Pokemon(db.Model):
     name = db.Column(db.String(3,255),nullable=False, unique=True)
     type = db.Column(db.String, nullable=False) # must be from list of types
 
+    @validates("number")
+    def validate_number(self, number, pokemons):
+        if number < 1:
+            raise ValueError("Number must be at least 1")
+        return self
+
     @validates("type")
-    def validate_name(self, type, pokemons):
+    def validate_type(self, type, pokemons):
         types = ["fire", "electric","normal","ghost", "psychic", "water", "bug", "dragon", "grass", "fighting", "ice", "flying", "poison", "ground", "rock", "steel"]
-        if pokemons["type"] not in types:
+        if type not in types:
             raise ValueError("Invalid pokemon type")
-        return pokemons
-        
+        return self
 
 
+    @validates("attack")
+    def validate_attack(self, attack, pokemons):
+        if attack < 0 or attack > 100:
+            raise ValueError("Attack must be between 0 and 100")
+        return self
 
-
-
-
-
+    
+    @validates("defense")
+    def validate_defense(self, defense, pokemons):
+        if defense < 0 or defense > 100:
+            raise ValueError("Defense must be between 0 and 100")
+        return self
 
 # 1 - 1
 
