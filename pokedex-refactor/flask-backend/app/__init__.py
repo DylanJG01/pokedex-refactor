@@ -1,5 +1,5 @@
 from flask import Flask
-# from .routes import simple
+# from .api import simple
 from .config import Configuration
 from .models import db
 from flask_migrate import Migrate
